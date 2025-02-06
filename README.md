@@ -15,6 +15,6 @@ You will need a few things to help develop the badge firmware:
 Install Python, and then install `mpremote`. Install VS Code, and clone this repository. Open the repo in VS Code and install the recommended extensions.
 
 Currently the badge firmware is developed with a Raspberry Pi Pico 2 on a breadboard. If you want to see the code, obtain one and follow these steps to get it setup:
-- Plugin drive while holding BOOTSEL and use the flash script or VS Code Task to flash firmware. 
-    - In VS Code, hit Ctrl+Shift+P or Cmd+Shift+B and choose `Tasks: Run Task` followed by `Flash MicroPython Firmware`.
+- Plug in drive while holding BOOTSEL and use the flash script or VS Code Task to flash firmware. 
+    - In VS Code, hit Ctrl+Shift+P or Cmd+Shift+P and choose `Tasks: Run Task` followed by `Flash MicroPython Firmware`.
 - After you make changes to the code, hit Ctrl+Shift+B or Cmd+Shift+B to automatically upload the code and reset the device.
