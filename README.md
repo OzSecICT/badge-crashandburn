@@ -18,3 +18,11 @@ Currently the badge firmware is developed with a Raspberry Pi Pico 2 on a breadb
 - Plug in drive while holding BOOTSEL and use the flash script or VS Code Task to flash firmware. 
     - In VS Code, hit Ctrl+Shift+P or Cmd+Shift+P and choose `Tasks: Run Task` followed by `Flash MicroPython Firmware`.
 - After you make changes to the code, hit Ctrl+Shift+B or Cmd+Shift+B to automatically upload the code and reset the device.
+
+## Folder Structure
+`.vscode` has the needed VS Code settings for recommended plugins, tasks, and settings for Pylance.
+`firmware` has the MicroPython firmware, so everyone uses the same one.
+`scripts` contains supporting scripts, such as flash and upload scripts. These are used by VS Code Tasks.
+`source` is the MicroPython source files uploaded to the device.
+`typings` contains Python typings for MicroPython. It stops the red squigglies.
+
