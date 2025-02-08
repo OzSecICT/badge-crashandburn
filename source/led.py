@@ -41,7 +41,7 @@ class LED:
 
 # Standard LED definitions
 badge_complete = LED(25)
-
+game_select = LED(8)
 
 # PWM-controlled LED definitions
 # led2 = LED(1, is_pwm=True)
