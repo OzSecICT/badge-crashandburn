@@ -40,8 +40,10 @@ class LED:
             raise ValueError("Cannot set brightness on non-PWM LED")
 
 # Standard LED definitions
-badge_complete = LED(25)
-game_select = LED(8)
+game_select_one = LED(8)
+game_select_two = LED(9)
+badge_complete = LED(10)
+pico_internal = LED(25)
 
 # PWM-controlled LED definitions
 # led2 = LED(1, is_pwm=True)
