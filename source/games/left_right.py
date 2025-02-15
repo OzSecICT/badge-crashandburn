@@ -4,76 +4,65 @@ Left Right Game
 This game is a simple guessing game where the player needs to determine
 which LED will light up by pressing a left or right button. Success will
 result in a success LED, while failure will continue the game.
-
-This is intended to be a very simple game to be used during development
-of the overall badge firmware, and to demonstrate how to create a game
-and launch into that game from the main.py.
-
-Requirements:
-- Two decision LED's
-- One success LED
-- Optional fail LED
-- Two buttons
-
-NOTE: This script is not tested and likely not working at the moment.
 """
 
-from machine import Pin
 import time
 import random
-import sys
-
-sys.path.append("..")  # Add parent directory to import path for butt
 
 import button
 import led
+from game import Game
 
-# TODO: redefine this using the above imports.
-# Define pins for LEDs and buttons
-led_left = Pin(2, Pin.OUT)
-led_right = Pin(3, Pin.OUT)
-button_left = Pin(4, Pin.IN, Pin.PULL_UP)
-button_right = Pin(5, Pin.IN, Pin.PULL_UP)
-success_led = Pin(6, Pin.OUT)
-fail_led = Pin(7, Pin.OUT)
+class LeftRightGame(Game):
+    def __init__(self):
+        super().__init__() # Call the parent class constructor
+        self.user_choice = None
+        self.chosen_led = None
 
-def flash_leds():
-    for _ in range(5):
-        led_left.on()
-        led_right.on()
-        time.sleep(0.2)
-        led_left.off()
-        led_right.off()
-        time.sleep(0.2)
+    def run(self):
+        super().run() # Call the parent run method to clear buttons/leds.
+        self.chosen_led = random.choice(['left', 'right'])
+        print("Running Left Right Game")
+        print("A random LED has been chosen, left or right.")
+        print("Make your choice, and see if you guessed correctly!")
+        print("Press A for left, B for right.")
+        print("Press SELECT to exit")
+        self.flash_leds()
 
-def wait_for_button_press():
-    while True:
-        if not button_left.value():
-            return 'left'
-        if not button_right.value():
-            return 'right'
-
-def run():
-    while True:
-        chosen_led = random.choice(['left', 'right'])
-        flash_leds()
-        
-        user_choice = wait_for_button_press()
-        
-        if chosen_led == 'left':
-            led_left.on()
-        else:
-            led_right.on()
-        
-        time.sleep(1)
-        
-        if user_choice == chosen_led:
-            success_led.on()
-            time.sleep(1)
-            success_led.off()
-        
-        led_left.off()
-        led_right.off()
+    def register_callbacks(self):
+        button.left.callback = self.clicked_a
+        button.right.callback = self.clicked_b
+        button.a.callback = self.clicked_a
+        button.b.callback = self.clicked_b
+        button.select.callback = self.clicked_select
     
-if __name__ == '__main__':
-    run()
+    def clicked_a(self, pin, pressed, duration):
+        if pressed:
+            self.user_choice = 'left'
+            self.check_guess()
+
+    def clicked_b(self, pin, pressed, duration):
+        if pressed:
+            self.user_choice = 'right'
+            self.check_guess()
+
+    def clicked_select(self, pin, pressed, duration):
+        if pressed:
+            self.exit()
+
+    def flash_leds(self):
+        for _ in range(5):
+            led.game_select_one.on()
+            led.game_select_two.on()
+            time.sleep(0.2)
+            led.game_select_one.off()
+            led.game_select_two.off()
+            time.sleep(0.2)
+
+    def check_guess(self):
+        if self.chosen_led == self.user_choice:
+            print("You win!")
+            led.badge_complete.on()
+        else:
+            print("You're wrong! Try again!")
+            self.run()

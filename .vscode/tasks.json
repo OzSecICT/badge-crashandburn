@@ -28,7 +28,7 @@
             "label": "Upload Code",
             "type": "shell",
             "command": "mpremote",
-            "args": ["cp", "-r", "${workspaceFolder}/source/", ":"],
+            "args": ["cp", "-r", "${workspaceFolder}/source/*", ":"],
             "problemMatcher": [],
             "group": {
                 "kind": "build",

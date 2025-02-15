@@ -9,29 +9,83 @@ select a different game/mode.
 
 """
 
-from machine import Pin, Timer
+from machine import Timer
+import time
+import random
 
-# import button
+import button
 import led
-# import games.left_right
+from games.light import LightGame
+from games.left_right import LeftRightGame
+
+class GameSelector:
+    def __init__(self):
+        self.games = [
+            {"led": led.game_select_one, "class": LeftRightGame},
+            {"led": led.game_select_two, "class": LightGame}
+        ]
+        self.current_index = 0
+        self.current_game = None
+        print(f"Initialized GameSelector with {len(self.games)} games.")
+
+    def next_game(self):
+        self.current_index = (self.current_index + 1) % len(self.games)
+        print(f"Selected next game: index {self.current_index}")
+        self.update_leds()
+
+    def update_leds(self):
+        for i, game in enumerate(self.games):
+            if i == self.current_index:
+                print(f"Selected game {i}")
+                game["led"].on()
+            else:
+                game["led"].off()
+
+    def run_current_game(self):
+        print(f"Running game at index {self.current_index}")
+        self.current_game = self.games[self.current_index]["class"]()
+        self.current_game.run()
+
+
+
+def callback_next_game(pin, pressed, duration):
+    global game_selector
+    if pressed:
+        game_selector.next_game()
+
+def callback_start_game(pin, pressed, duration):
+    global game_selector
+    if pressed:
+        game_selector.run_current_game()
+
+
+def register_callbacks():
+    button.start.callback = callback_start_game
+    button.select.callback = callback_next_game
 
 def idle_blink():
-    """
-    Blinks LED's, this is the default mode.
-    """
-    tim = Timer()
-    # button = Pin("BUTTON", Pin.IN, Pin.PULL_UP)
-    
-    # def check_button(timer):
-    #     if not button.value():
-    #         timer.deinit()
-    #         led.off()
-    #         return
-    
-    def blink(led):
-        led.toggle()
-    # TODO: I don't think this is working.
-    tim.init(freq=2, mode=Timer.PERIODIC, callback=blink(led))
+    time.sleep(random.uniform(0.01, 0.1))
+    led.pico_internal.flash(100)
 
-if __name__ == "__main__":
-    idle_blink()
+print("Starting CRASHANDBURN")
+game_selector = GameSelector()
+
+# Clear buttons and leds
+button.clear()
+led.clear()
+
+# Register our button callbacks
+register_callbacks()
+
+# Start the idle blink
+idle_blink()
+
+while True:
+    if game_selector.current_game is not None:
+        if game_selector.current_game.is_running == False:
+            game_selector.current_game = None # Clear the current game
+            register_callbacks() # Re-register the callbacks
+            idle_blink() # Start the idle blink
+
+    time.sleep(0.1)
+    pass
