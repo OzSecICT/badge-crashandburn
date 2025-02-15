@@ -15,13 +15,13 @@ import random
 
 import button
 import led
-# import games.left_right
 from games.light import LightGame
+from games.left_right import LeftRightGame
 
 class GameSelector:
     def __init__(self):
         self.games = [
-            # {"led": led.game_select_one, "class": games.left_right},
+            {"led": led.game_select_one, "class": LeftRightGame},
             {"led": led.game_select_two, "class": LightGame}
         ]
         self.current_index = 0
@@ -84,6 +84,7 @@ while True:
     if game_selector.current_game is not None:
         if game_selector.current_game.is_running == False:
             game_selector.current_game = None # Clear the current game
+            register_callbacks() # Re-register the callbacks
             idle_blink() # Start the idle blink
 
     time.sleep(0.1)

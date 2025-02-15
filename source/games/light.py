@@ -1,8 +1,8 @@
 """
 Light Game
 
-Press the A button and light up the game_select_one LED.
-Press the B button and light up the game_select_two LED.
+Press the A button and toggle the game_select_one LED.
+Press the B button and toggle the game_select_two LED.
 """
 
 import button
@@ -38,7 +38,3 @@ class LightGame(Game):
     def clicked_select(self, pin, pressed, duration):
         if pressed:
             self.exit()
-
-def start():
-    light_game = LightGame()
-    light_game.run()
