@@ -16,15 +16,16 @@ import random
 import button
 import led
 # import games.left_right
-import games.light
+from games.light import LightGame
 
 class GameSelector:
     def __init__(self):
         self.games = [
-            # {"led": led.game_select_one, "module": games.left_right},
-            {"led": led.game_select_two, "module": games.light}
+            # {"led": led.game_select_one, "class": games.left_right},
+            {"led": led.game_select_two, "class": LightGame}
         ]
         self.current_index = 0
+        self.current_game = None
         print(f"Initialized GameSelector with {len(self.games)} games.")
 
     def next_game(self):
@@ -35,15 +36,15 @@ class GameSelector:
     def update_leds(self):
         for i, game in enumerate(self.games):
             if i == self.current_index:
-                print(f"Turning on LED for game {i}")
+                print(f"Selected game {i}")
                 game["led"].on()
             else:
-                print(f"Turning off LED for game {i}")
                 game["led"].off()
 
     def run_current_game(self):
         print(f"Running game at index {self.current_index}")
-        self.games[self.current_index]["module"].start()
+        self.current_game = self.games[self.current_index]["class"]()
+        self.current_game.run()
 
 
 
@@ -80,6 +81,10 @@ register_callbacks()
 idle_blink()
 
 while True:
-    if 
+    if game_selector.current_game is not None:
+        if game_selector.current_game.is_running == False:
+            game_selector.current_game = None # Clear the current game
+            idle_blink() # Start the idle blink
+
     time.sleep(0.1)
     pass

@@ -23,7 +23,7 @@ class LightGame(Game):
     def register_callbacks(self):
         # Register callbacks
         button.start.callback = None
-        button.select.callback = self.exit
+        button.select.callback = self.clicked_select
         button.a.callback = self.clicked_a
         button.b.callback = self.clicked_b
 
@@ -34,6 +34,10 @@ class LightGame(Game):
     def clicked_b(self, pin, pressed, duration):
         if pressed:
             led.game_select_two.toggle()
+
+    def clicked_select(self, pin, pressed, duration):
+        if pressed:
+            self.exit()
 
 def start():
     light_game = LightGame()
