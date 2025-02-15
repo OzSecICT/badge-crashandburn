@@ -36,38 +36,44 @@ def flash_leds():
         led.game_select_one.off()
         led.game_select_two.off()
         time.sleep(0.2)
+        
+def clicked_a(pin, pressed, duration):
+    global user_choice
+    if pressed:
+        user_choice = 'left'
+        
 
-def wait_for_button_press():
-    while True:
-        if not button.left.value():
-            return 'left'
-        if not button.right.value():
-            return 'right'
+def clicked_b(pin, pressed, duration):
+    global user_choice
+    if pressed:
+        user_choice = 'right'
+
 
 def run():
-    while True:
-        if button.select.value():
-            return
-        
-        chosen_led = random.choice(['left', 'right'])
+    user_choice = None
+    chosen_led = random.choice(['left', 'right'])
+
+    while user_choice is None:
         flash_leds()
-        
-        user_choice = wait_for_button_press()
-        
-        if chosen_led == 'left':
-            led.game_select_one.on()
-        else:
-            led.game_select_two.on()
-        
-        time.sleep(1)
-        
-        if user_choice == chosen_led:
+        print("Make a selection!")
+
+    if chosen_led == 'left' and user_choice == 'left':
+        print("You win!")
+        for _ in range(5):
             led.badge_complete.on()
-            time.sleep(1)
+            time.sleep(0.5)
             led.badge_complete.off()
-        
-        led.game_select_one.off()
-        led.game_select_two.off()
+    
+    if chosen_led == 'right' and user_choice == 'right':
+        print("You win!")
+        for _ in range(5):
+            led.badge_complete.on()
+            time.sleep(0.5)
+            led.badge_complete.off()
+    
+    led.game_select_one.off()
+    led.game_select_two.off()
+    print("Game Over!")
     
 if __name__ == '__main__':
     run()

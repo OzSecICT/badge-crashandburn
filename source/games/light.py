@@ -7,22 +7,34 @@ Press the B button and light up the game_select_two LED.
 
 import button
 import led
+from game import Game
 
-def run():
-    while True:
-        if button.select.value():
-            return
-        
-        if not button.a.value():
-            led.game_select_one.on()
-        else:
-            led.game_select_one.off()
-        
-        if not button.b.value():
-            led.game_select_two.on()
-        else:
-            led.game_select_two.off()
+class LightGame(Game):
+    def __init__(self):
+        super().__init__() # Call the parent class constructor
 
+    def run(self):
+        super().run() # Call the parent run method to clear buttons/leds.
+        print("Running Light Game")
+        print("Press A to toggle game_select_one LED")
+        print("Press B to toggle game_select_two LED")
+        print("Press SELECT to exit")
 
-if __name__ == '__main__':
-    run()
+    def register_callbacks(self):
+        # Register callbacks
+        button.start.callback = None
+        button.select.callback = self.exit
+        button.a.callback = self.clicked_a
+        button.b.callback = self.clicked_b
+
+    def clicked_a(self, pin, pressed, duration):
+        if pressed:
+            led.game_select_one.toggle()
+
+    def clicked_b(self, pin, pressed, duration):
+        if pressed:
+            led.game_select_two.toggle()
+
+def start():
+    light_game = LightGame()
+    light_game.run()
