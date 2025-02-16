@@ -60,8 +60,8 @@ def callback_start_game(pin, pressed, duration):
 
 
 def register_callbacks():
-    button.start.callback = callback_start_game
-    button.select.callback = callback_next_game
+    button.start.callback = callback_start_game # type: ignore
+    button.select.callback = callback_next_game # type: ignore
 
 def idle_blink():
     time.sleep(random.uniform(0.01, 0.1))
