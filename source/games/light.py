@@ -23,9 +23,9 @@ class LightGame(Game):
     def register_callbacks(self):
         # Register callbacks
         button.start.callback = None
-        button.select.callback = self.clicked_select
-        button.a.callback = self.clicked_a
-        button.b.callback = self.clicked_b
+        button.select.callback = self.clicked_select # type: ignore
+        button.a.callback = self.clicked_a # type: ignore
+        button.b.callback = self.clicked_b # type: ignore
 
     def clicked_a(self, pin, pressed, duration):
         if pressed:
