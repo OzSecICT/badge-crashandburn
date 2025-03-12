@@ -85,6 +85,7 @@ def clear():
 # Standard LED definitions
 game_select_one = LED(8)
 game_select_two = LED(9)
+game_select_three = LED(11)
 badge_complete = LED(10)
 pico_internal = LED(25)
 

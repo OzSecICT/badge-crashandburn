@@ -17,12 +17,14 @@ import button
 import led
 from games.light import LightGame
 from games.left_right import LeftRightGame
+from games.dtmf import DtmfGame
 
 class GameSelector:
     def __init__(self):
         self.games = [
             {"led": led.game_select_one, "class": LeftRightGame},
-            {"led": led.game_select_two, "class": LightGame}
+            {"led": led.game_select_two, "class": LightGame},
+            {"led": led.game_select_three, "class": DtmfGame}
         ]
         self.current_index = 0
         self.current_game = None
