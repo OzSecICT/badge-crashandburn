@@ -30,11 +30,11 @@ class LeftRightGame(Game):
         self.flash_leds()
 
     def register_callbacks(self):
-        button.left.callback = self.clicked_a
-        button.right.callback = self.clicked_b
-        button.a.callback = self.clicked_a
-        button.b.callback = self.clicked_b
-        button.select.callback = self.clicked_select
+        button.left.callback = self.clicked_a # type: ignore
+        button.right.callback = self.clicked_b # type: ignore
+        button.a.callback = self.clicked_a # type: ignore
+        button.b.callback = self.clicked_b # type: ignore
+        button.select.callback = self.clicked_select # type: ignore
     
     def clicked_a(self, pin, pressed, duration):
         if pressed:
