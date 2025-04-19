@@ -17,12 +17,14 @@ import button
 import led
 from games.light import LightGame
 from games.left_right import LeftRightGame
+from games.dtmf import DtmfGame
 
 class GameSelector:
     def __init__(self):
         self.games = [
             {"led": led.game_select_one, "class": LeftRightGame},
-            {"led": led.game_select_two, "class": LightGame}
+            {"led": led.game_select_two, "class": LightGame},
+            {"led": led.game_select_three, "class": DtmfGame}
         ]
         self.current_index = 0
         self.current_game = None
@@ -60,8 +62,8 @@ def callback_start_game(pin, pressed, duration):
 
 
 def register_callbacks():
-    button.start.callback = callback_start_game
-    button.select.callback = callback_next_game
+    button.start.callback = callback_start_game # type: ignore
+    button.select.callback = callback_next_game # type: ignore
 
 def idle_blink():
     time.sleep(random.uniform(0.01, 0.1))
