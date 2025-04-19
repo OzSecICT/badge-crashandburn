@@ -1,0 +1,41 @@
+# Pinout
+The badge pinout should mirror a Pi Pico 2 as much as possible.
+
+GPIO0-GPIO222
+GPIO23 - Pico switch mode power supply mode
+GPIO24 - Pico VBUS sense
+GPIO25 - Pico LED
+GPIO26-GPIO28
+GPOIO29 - Pico ADC3 VSYS
+
+
+GPIO0 - Left
+GPIO1 - Up
+GPIO2 - Down
+GPIO3 - Right
+GPIO4 - Start
+GPIO5 - Select
+GPIO6 - A
+GPIO7 - B
+GPIO8 - 
+GPIO9
+GPIO10
+GPIO11
+GPIO12
+GPIO13
+GPIO14
+GPIO15
+GPIO16
+GPIO17
+GPIO18
+GPIO19
+GPIO20
+GPIO21
+GPIO22
+GPIO23
+GPIO24
+GPIO25 - Badge Complete
+GPIO26
+GPIO27
+GPIO28
+GPIO29
