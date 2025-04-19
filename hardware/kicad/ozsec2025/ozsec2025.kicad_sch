@@ -13027,10 +13027,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a34")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f56a")
 		)
 		(instances
 			(project ""
@@ -14193,10 +14193,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a35")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f56b")
 		)
 		(instances
 			(project ""
@@ -14684,10 +14684,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a36")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f56c")
 		)
 		(instances
 			(project ""
@@ -14851,10 +14851,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a37")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f56d")
 		)
 		(instances
 			(project ""
@@ -15307,7 +15307,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ozsec:MY-AA-04_BT1A"
+		(property "Footprint" "ozsec-common:MY-AA-04_BT1A"
 			(at -3.81 116.586 90)
 			(effects
 				(font
@@ -15580,10 +15580,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a38")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f56e")
 		)
 		(instances
 			(project ""
@@ -15659,10 +15659,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a39")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f56f")
 		)
 		(instances
 			(project ""
@@ -15738,10 +15738,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a3a")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f570")
 		)
 		(instances
 			(project ""
@@ -15817,10 +15817,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a3b")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f571")
 		)
 		(instances
 			(project ""
@@ -16124,10 +16124,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a3c")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f572")
 		)
 		(instances
 			(project ""
@@ -16203,10 +16203,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a3d")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f573")
 		)
 		(instances
 			(project ""
@@ -16674,10 +16674,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a3e")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f574")
 		)
 		(instances
 			(project ""
@@ -16936,7 +16936,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ozsec:RP2350-QFN-80-1EP_10x10_P0.4mm_EP3.4x3.4mm_ThermalVias"
+		(property "Footprint" "ozsec-common:RP2350-QFN-80-1EP_10x10_P0.4mm_EP3.4x3.4mm_ThermalVias"
 			(at 149.86 107.95 0)
 			(effects
 				(font
@@ -17327,7 +17327,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ozsec:MY-AA-04"
+		(property "Footprint" "ozsec-common:MY-AA-04"
 			(at 17.78 122.936 90)
 			(effects
 				(font
@@ -17452,10 +17452,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a3f")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f575")
 		)
 		(instances
 			(project ""
@@ -17757,10 +17757,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a40")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f576")
 		)
 		(instances
 			(project ""
@@ -17836,10 +17836,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a41")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f577")
 		)
 		(instances
 			(project ""
@@ -18727,10 +18727,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a42")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f578")
 		)
 		(instances
 			(project ""
@@ -19720,10 +19720,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a43")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f579")
 		)
 		(instances
 			(project ""
@@ -20203,10 +20203,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a44")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f57a")
 		)
 		(instances
 			(project ""
@@ -20413,10 +20413,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a33")
+			(uuid "e777ad8a-5042-4a29-a290-5c93b6542a45")
 		)
 		(pin "2"
-			(uuid "6da66529-7463-4f2e-91bf-8cbba766f569")
+			(uuid "6da66529-7463-4f2e-91bf-8cbba766f57b")
 		)
 		(instances
 			(project ""
@@ -20587,7 +20587,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ozsec:MY-AA-04_BT1B"
+		(property "Footprint" "ozsec-common:MY-AA-04_BT1B"
 			(at -3.81 128.016 90)
 			(effects
 				(font
