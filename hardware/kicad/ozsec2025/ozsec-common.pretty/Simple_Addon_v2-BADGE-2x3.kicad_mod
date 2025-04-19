@@ -117,6 +117,18 @@
 			(justify mirror)
 		)
 	)
+	(fp_text user "GPIO1"
+		(at 3.2 -2.794 0)
+		(layer "B.SilkS")
+		(uuid "00000000-0000-0000-0000-000000000000")
+		(effects
+			(font
+				(size 0.75 0.75)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
 	(fp_text user "VCC"
 		(at -2.54 -2.794 0)
 		(layer "B.SilkS")
@@ -155,18 +167,6 @@
 	)
 	(fp_text user "GPIO2"
 		(at 3.2 3.048 0)
-		(layer "B.SilkS")
-		(uuid "00000000-0000-0000-0000-000000000000")
-		(effects
-			(font
-				(size 0.75 0.75)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(fp_text user "GPIO1"
-		(at 3.2 -2.794 0)
 		(layer "B.SilkS")
 		(uuid "00000000-0000-0000-0000-000000000000")
 		(effects

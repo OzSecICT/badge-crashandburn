@@ -1,4 +1,4 @@
-(footprint "Floppy_Slide"
+(footprint "Floppy_Slide_Cu"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")
@@ -16,7 +16,7 @@
 			)
 		)
 	)
-	(property "Value" "Floppy_Slide"
+	(property "Value" "Floppy_Slide_Cu"
 		(at 0 -4.5 0)
 		(unlocked yes)
 		(layer "F.Fab")

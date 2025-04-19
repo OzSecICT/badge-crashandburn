@@ -465,7 +465,10 @@
   },
   "libraries": {
     "pinned_footprint_libs": [
-      "ozsec"
+      "ozsec",
+      "ozsec-custom",
+      "ozsec-common",
+      "ozsec-2025"
     ],
     "pinned_symbol_libs": []
   },

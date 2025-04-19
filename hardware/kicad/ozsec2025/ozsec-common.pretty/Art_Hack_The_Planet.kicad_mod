@@ -1,4 +1,4 @@
-(footprint "Hack_The_Planet"
+(footprint "Art_Hack_The_Planet"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")
@@ -15,7 +15,7 @@
 			)
 		)
 	)
-	(property "Value" "Hack_The_Planet"
+	(property "Value" "Art_Hack_The_Planet"
 		(at 0 9.5 0)
 		(unlocked yes)
 		(layer "F.Fab")
