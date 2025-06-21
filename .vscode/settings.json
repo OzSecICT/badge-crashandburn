@@ -5,7 +5,7 @@
         "reportMissingModuleSource": "none"
     },
     "python.analysis.typeshedPaths": [
-        ".venv/Lib/site-packages"
+        "typings"
     ],
     "editor.rulers": [
         72
