@@ -35,7 +35,7 @@ class LED:
 
     def blink(self, times, duration_ms=500):
         paused = False
-        # if odd number, add one more blink to return the led to it's original state.
+        # if odd number, add one more blink to return the led to its original state.
         if times % 2 != 0:
             times += 1
         if self.timer is not None:

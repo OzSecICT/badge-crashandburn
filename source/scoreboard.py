@@ -15,9 +15,7 @@ class Scoreboard:
         self.score_leds = [self.ones_led, self.twos_led, self.fours_led, self.eights_led]
         
     def show_score(self, game):
-        if self.current_game is None:
-            print("No game selected to display score.")
-            return
+        self.current_game = game
         print(f"Showing score for game: {self.current_game}")
         self.display_score(self.scores.get(game, 0))
 
@@ -55,7 +53,7 @@ class Scoreboard:
             self.scores[game] = 1
         print(f"Score for {game} is now {self.scores.get([game], 0)}")
 
-    def get_score(self, game):
+        print(f"Score for {game} is now {self.scores.get(game, 0)}")
         print(f"Score for {game}: {self.scores.get(game, 0)}")
         return self.scores.get(game, 0)
 
