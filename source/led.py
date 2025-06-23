@@ -7,6 +7,8 @@ This script sets up each of the available LEDs on the badge.
 from machine import Pin, PWM, Timer
 import time
 
+import pinout
+
 class LED:
     def __init__(self, pin, is_pwm=False):
         self.pin = pin
@@ -139,6 +141,39 @@ score_ones = LED(39)
 score_twos = LED(38)
 score_fours = LED(37)
 score_eights = LED(36)
+
+# Scoreboard
+score_eights = LED(pinout.pin_score_eights)
+score_fours = LED(pinout.pin_score_fours)
+score_twos = LED(pinout.pin_score_twos)
+score_ones = LED(pinout.pin_score_ones)
+
+# Badge LED
+badge_complete = LED(pinout.pin_badge_complete)
+badge_bonus = LED(pinout.pin_badge_bonus)
+
+# Game LED definitions
+kode_complete = LED(pinout.pin_kode_complete)
+
+simon_complete = LED(pinout.pin_simon_complete)
+simon_bonus = LED(pinout.pin_simon_bonus)
+simon_left = LED(pinout.pin_simon_left)
+simon_right = LED(pinout.pin_simon_right)
+simon_up = LED(pinout.pin_simon_up)
+simon_down = LED(pinout.pin_simon_down)
+
+hilo_complete = LED(pinout.pin_hilo_complete)
+hilo_lo = LED(pinout.pin_hilo_lo)
+hilo_hi = LED(pinout.pin_hilo_hi)
+
+dtmf_complete = LED(pinout.pin_dtmf_complete)
+dtmf_bonus = LED(pinout.pin_dtmf_bonus)
+
+rps_complete = LED(pinout.pin_rps_complete)
+rps_bonus = LED(pinout.pin_rps_bonus)
+rps_rock = LED(pinout.pin_rps_rock)
+rps_scissors = LED(pinout.pin_rps_scissors)
+rps_paper = LED(pinout.pin_rps_paper)
 
 # PWM-controlled LED definitions
 # led2 = LED(1, is_pwm=True)
