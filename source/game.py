@@ -26,7 +26,7 @@ class Game:
         button.a.callback = self.do_nothing  # type: ignore
         button.b.callback = self.do_nothing  # type: ignore
         button.start.callback = self.do_nothing  # type: ignore
-        button.select.callback = self.do_nothing  # type: ignore
+        button.select.callback = self.clicked_select  # type: ignore
 
     def do_nothing(self):
         """
@@ -35,6 +35,13 @@ class Game:
         """
         print("Button pressed, doing nothing.")
         pass
+
+    def clicked_select(self, pin, pressed, duration):
+        """
+        Handle the select button being pressed
+        """
+        if pressed:
+            self.exit()
 
     @property
     def is_running(self):
