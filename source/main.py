@@ -15,16 +15,17 @@ import random
 
 import button
 import led
-from games.light import LightGame
-from games.left_right import LeftRightGame
-from games.dtmf import DtmfGame
+from games.hilo import HiLoGame
+from games.rps import RPSGame
+# from games.light import LightGame
+# from games.left_right import LeftRightGame
+# from games.dtmf import DtmfGame
 
 class GameSelector:
     def __init__(self):
         self.games = [
-            {"led": led.game_select_one, "class": LeftRightGame},
-            {"led": led.game_select_two, "class": LightGame},
-            {"led": led.game_select_three, "class": DtmfGame}
+            {"led": led.hilo_complete, "class": HiLoGame},
+            {"led": led.rps_complete, "class": RPSGame}
         ]
         self.current_index = 0
         self.current_game = None
@@ -48,8 +49,6 @@ class GameSelector:
         self.current_game = self.games[self.current_index]["class"]()
         self.current_game.run()
 
-
-
 def callback_next_game(pin, pressed, duration):
     global game_selector
     if pressed:
@@ -60,14 +59,24 @@ def callback_start_game(pin, pressed, duration):
     if pressed:
         game_selector.run_current_game()
 
+def callback_toggle_led(pin, pressed, duration):
+    """
+    Callback to toggle the LED state.
+    This is a placeholder for any LED toggling logic.
+    """
+    if pressed:
+        print("Toggle LED between idle and score state.")
+        led.badge_complete.toggle()
 
 def register_callbacks():
     button.start.callback = callback_start_game # type: ignore
     button.select.callback = callback_next_game # type: ignore
+    button.a.callback = callback_toggle_led # type: ignore
+    button.b.callback = callback_toggle_led # type: ignore
 
 def idle_blink():
-    time.sleep(random.uniform(0.01, 0.1))
-    led.pico_internal.flash(100)
+    time.sleep(random.uniform(0.01, 0.1)) # why is this here?
+    led.badge_complete.flash(100)
 
 print("Starting CRASHANDBURN")
 game_selector = GameSelector()
@@ -86,8 +95,9 @@ while True:
     if game_selector.current_game is not None:
         if game_selector.current_game.is_running == False:
             game_selector.current_game = None # Clear the current game
+            button.clear() # Clear button callbacks
+            led.clear() # Clear LEDs
             register_callbacks() # Re-register the callbacks
             idle_blink() # Start the idle blink
-
     time.sleep(0.1)
     pass
