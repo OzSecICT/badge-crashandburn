@@ -1,0 +1,1 @@
+print('OzSecCTF{0p3n_or_r3ad_1s_4ll_y0u_n33d}')
