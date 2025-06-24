@@ -75,6 +75,8 @@ def clear():
     down.callback = None
     right.callback = None
 
+
+print("Initializing buttons...")
 start = DebouncedInput(pinout.pin_button_start, None, Pin.PULL_UP, False, 100)
 select = DebouncedInput(pinout.pin_button_select, None, Pin.PULL_UP, False, 100)
 a = DebouncedInput(pinout.pin_button_a, None, Pin.PULL_UP, False, 100)
