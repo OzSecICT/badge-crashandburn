@@ -9,9 +9,11 @@ select a different game/mode.
 
 """
 
+import _thread
 from machine import Timer
 import time
 import random
+
 
 import button
 import led
@@ -52,9 +54,10 @@ class GameSelector:
         self.current_game.run()
 
 def callback_next_game(pin, pressed, duration):
-    global game_selector
+    global game_selector, idle_blink
     if pressed:
-        stop_blink_timer()
+        idle_blink = False
+        led.clear()
         game_selector.next_game()
 
 def callback_start_game(pin, pressed, duration):
@@ -64,30 +67,16 @@ def callback_start_game(pin, pressed, duration):
 
 def callback_toggle_led_mode(pin, pressed, duration):
     """
-    Callback to toggle the LED state.
+    Toggles between idle blink mode
     """
-    global blinky_mode
+    global idle_blink
 
     if pressed:
-        if blinky_mode:
-            stop_blink_timer()
+        if idle_blink:
+            idle_blink = False
+            led.clear()
         else:
-            start_blink_timer()
-
-def start_blink_timer():
-    global idle_timer, blinky_mode
-
-    idle_timer = Timer(-1)
-    idle_timer.init(period=1000, mode=Timer.PERIODIC, callback=blink_random)
-    blinky_mode = True
-
-def stop_blink_timer():
-    global idle_timer, blinky_mode
-
-    if idle_timer is not None:
-        idle_timer.deinit()
-    blinky_mode = False
-    led.clear()
+            idle_blink = True
 
 def register_callbacks():
     print("Registering button callbacks...")
@@ -96,27 +85,21 @@ def register_callbacks():
     button.a.callback = callback_toggle_led_mode # type: ignore
     button.b.callback = callback_toggle_led_mode # type: ignore
 
-def blink_random(run=True):
-    """
-    Randomly selects an LED to blink
-    """
-    global led, blinky_mode
-    if run:
-        blinky_mode = True
-        # Select a random LED
-        leds = led.get_all_leds()
-        pwm = random.choice(leds)
-        pwm.toggle(fade=True)
-    else:
-        blinky_mode = False
-        led.clear()
+def blink_controller():
+    global idle_blink
+    leds = led.get_all_leds()
+    while True:
+        if idle_blink:
+            pwm = random.choice(leds)
+            pwm.toggle() # Do not fade, as that is blocking and breaks USB
+            # TODO: Find a different way to fade the LEDs...
+        time.sleep_ms(500)
+
 
 print("Starting CRASHANDBURN")
 game_selector = GameSelector()
-idle_timer = None
-blinky_mode = False
 
-
+idle_blink = True
 
 # Clear buttons and leds
 button.clear()
@@ -125,8 +108,8 @@ led.clear()
 # Register our button callbacks
 register_callbacks()
 
-# Start the idle blink
-start_blink_timer()
+# Start blink controller on second core
+_thread.start_new_thread(blink_controller, ())
 
 while True:
     if game_selector.current_game is not None:
@@ -135,6 +118,5 @@ while True:
             button.clear() # Clear button callbacks
             led.clear() # Clear LEDs
             register_callbacks() # Re-register the callbacks
-            
     time.sleep(0.1)
     pass

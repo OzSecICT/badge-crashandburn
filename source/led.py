@@ -29,7 +29,7 @@ class LED:
         if self.timer is not None:
             self.stop_timer()
         if self.is_pwm:
-            if fade:
+            if fade: # TODO: Change this to a timer based approach.
                 # Ramp up brightness
                 # Set duty to 0, then gradually increase to self.brightness
                 self.pwm.duty_u16(0)
@@ -46,7 +46,7 @@ class LED:
         if self.timer is not None:
             self.stop_timer()
         if self.is_pwm:
-            if fade:
+            if fade: # TODO: Change this to a timer based approach.
                 # Ramp down brightness
                 # Set duty to self.brightness, then gradually decrease to 0
                 self.pwm.duty_u16(self.brightness)
@@ -97,18 +97,6 @@ class LED:
                 self.on(fade=fade)
             else:
                 self.off(fade=fade)
-        else:
-            if self.gpio.value() == 0:
-                self.on()
-            else:
-                self.off()
-
-    def toggle_fade(self):
-        if self.is_pwm:
-            if self.pwm.duty_u16() == 0:
-                self.on(fade=True)
-            else:
-                self.off(fade=True)
         else:
             if self.gpio.value() == 0:
                 self.on()
