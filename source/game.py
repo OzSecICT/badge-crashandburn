@@ -1,5 +1,6 @@
 import button
 import led
+import scoreboard
 
 class Game:
     """
@@ -56,6 +57,7 @@ class Game:
         led.clear()
         button.clear()
         self.register_callbacks()
+        scoreboard.score.update()
 
     def exit(self):
         """

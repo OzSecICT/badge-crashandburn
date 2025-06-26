@@ -11,6 +11,7 @@ import time
 import button
 import led
 import pinout
+import scoreboard
 from game import Game
 
 class RPSGame(Game):
@@ -167,6 +168,7 @@ class RPSGame(Game):
              (player_choice == "PAPER" and peer_choice == "ROCK") or \
              (player_choice == "SCISSORS" and peer_choice == "PAPER"):
             self.score += 1
+            scoreboard.score.add("RPS")
             print(f"Player wins! Score is now {self.score}")
         else:
             print(f"Peer wins! Your score remains {self.score}")

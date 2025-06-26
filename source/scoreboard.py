@@ -1,6 +1,8 @@
-import machine
-from machine import Pin
+"""
+Scoreboard
 
+Maintains and displays the scoreboard.
+"""
 import led
 
 class Scoreboard:
@@ -14,10 +16,17 @@ class Scoreboard:
         self.eights_led = led.score_eights
         self.score_leds = [self.ones_led, self.twos_led, self.fours_led, self.eights_led]
         
-    def show_score(self, game):
+    def show(self, game):
+        if game not in self.scores:
+            self.scores[game] = 0
         self.current_game = game
         print(f"Showing score for game: {self.current_game}")
         self.display_score(self.scores.get(game, 0))
+
+
+    def update(self):
+        print(f"Updating score for: {self.current_game}")
+        self.display_score(self.scores.get(self.current_game, 0))
 
     def display_score(self, score):
         print(f"Converting score {score} to binary.")
@@ -45,7 +54,7 @@ class Scoreboard:
         else:
             self.eights_led.off()
 
-    def add_score(self, game):
+    def add(self, game):
         print(f"Adding score for game: {game}")
         if game in self.scores:
             self.scores[game] += 1
@@ -57,10 +66,12 @@ class Scoreboard:
         print(f"Score for {game}: {self.scores.get(game, 0)}")
         return self.scores.get(game, 0)
 
-    def remove_score(self, game):
+    def remove(self, game):
         if game in self.scores:
             if self.scores[game] > 0:
                 self.scores[game] -= 1
             print(f"Score for {game} is now {self.scores.get(game, 0)}")
         else:
             print(f"No score found for game: {game}")
+
+score = Scoreboard()

@@ -17,6 +17,7 @@ import random
 
 import button
 import led
+import scoreboard
 from games.hilo import HiLoGame
 from games.rps import RPSGame
 from games.test import TestGame
@@ -45,6 +46,8 @@ class GameSelector:
             if i == self.current_index:
                 print(f"Selected game [{i}]: {game['name']}")
                 game["led"].on()
+                # Change scoreboard
+                scoreboard.score.show(game['name'])
             else:
                 game["led"].off()
 

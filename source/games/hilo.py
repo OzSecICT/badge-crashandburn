@@ -8,6 +8,7 @@ their score increases.
 """
 import random
 
+import scoreboard
 import button
 import led
 from game import Game
@@ -68,6 +69,7 @@ class HiLoGame(Game):
                 self.exit()
                 return
             self.score += 1
+            scoreboard.score.add("HiLo")
             print(f"Correct! Your score is now {self.score}.")
             self.run()
         else:
