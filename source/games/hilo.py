@@ -22,17 +22,32 @@ class HiLoGame(Game):
         self.score = 0
         self.choice = None
         self.guess = None
-        self.options = ["hi", "lo"]
+        self.options = ["HI", "LO"]
 
     def register_callbacks(self):
-        button.up.callback = self.do_nothing  # type: ignore
-        button.down.callback = self.do_nothing  # type: ignore
-        button.left.callback = self.do_nothing  # type: ignore
-        button.right.callback = self.do_nothing  # type: ignore
-        button.a.callback = self.do_nothing  # type: ignore
-        button.b.callback = self.do_nothing  # type: ignore
-        button.start.callback = self.do_nothing  # type: ignore
-        button.select.callback = self.do_nothing  # type: ignore
+        button.up.callback = self.clicked_a  # type: ignore
+        button.down.callback = self.clicked_b  # type: ignore
+        button.a.callback = self.clicked_a  # type: ignore
+        button.b.callback = self.clicked_b  # type: ignore
+        button.select.callback = self.clicked_select  # type: ignore
+
+    def clicked_a(self, pin, pressed, duration):
+        """
+        Handle the A button being pressed in HiLoGame
+        """
+        if pressed:
+            self.guess = "HI"
+            print(f"User guessed: {self.guess}")
+            self.check(self.guess)
+
+    def clicked_b(self, pin, pressed, duration):
+        """
+        Handle the B button being pressed in HiLoGame
+        """
+        if pressed:
+            self.guess = "LO"
+            print(f"User guessed: {self.guess}")
+            self.check(self.guess)
 
     def run(self):
         """
@@ -50,8 +65,12 @@ class HiLoGame(Game):
         if guess == self.choice:
             if self.score >= 15:
                 print("Maximum score reached!")
+                self.exit()
                 return
             self.score += 1
             print(f"Correct! Your score is now {self.score}.")
+            self.run()
         else:
             print(f"Wrong! Your score remains {self.score}.")
+            print("Try again!")
+            self.run()

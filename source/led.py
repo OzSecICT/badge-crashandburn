@@ -7,29 +7,55 @@ This script sets up each of the available LEDs on the badge.
 from machine import Pin, PWM, Timer
 import time
 
+import pinout
+
 class LED:
-    def __init__(self, pin, is_pwm=False):
+    def __init__(self, pin, is_pwm=False, brightness=10):
         self.pin = pin
         self.is_pwm = is_pwm
         self.timer = None
+        self.brightness = int(brightness * 655.35)  # Convert 0-100 to 0-65535 for PWM
         self._timer_period = None
         self._timer_mode = None
         self._timer_callback = None
+
         if is_pwm:
             self.pwm = PWM(Pin(pin))
             self.pwm.freq(1000)  # Set PWM frequency to 1kHz
         else:
             self.gpio = Pin(pin, Pin.OUT)
 
-    def on(self):
+    def on(self, fade=False):
+        if self.timer is not None:
+            self.stop_timer()
         if self.is_pwm:
-            self.pwm.duty_u16(65535)  # Full brightness
+            if fade:
+                # Ramp up brightness
+                # Set duty to 0, then gradually increase to self.brightness
+                self.pwm.duty_u16(0)
+                step = self.brightness // 10  # Adjust step size as needed
+                for duty in range(0, self.brightness + 1, step):
+                    self.pwm.duty_u16(duty)
+                    time.sleep_ms(50)
+            else:
+                self.pwm.duty_u16(self.brightness)
         else:
             self.gpio.value(1)
 
-    def off(self):
+    def off(self, fade=False):
+        if self.timer is not None:
+            self.stop_timer()
         if self.is_pwm:
-            self.pwm.duty_u16(0)
+            if fade:
+                # Ramp down brightness
+                # Set duty to self.brightness, then gradually decrease to 0
+                self.pwm.duty_u16(self.brightness)
+                step = self.brightness // 10  # Adjust step size as needed
+                for duty in range(self.brightness, -1, -step):
+                    self.pwm.duty_u16(duty)
+                    time.sleep_ms(50)
+            else:
+                self.pwm.duty_u16(0)
         else:
             self.gpio.value(0)
 
@@ -58,19 +84,43 @@ class LED:
         if self.is_pwm:
             if 0 <= brightness <= 100:
                 # Convert 0-100 to 0-65535
-                duty = int(brightness * 655.35)
-                self.pwm.duty_u16(duty)
+                self.brightness = int(brightness * 655.35)
+                self.pwm.duty_u16(self.brightness)
             else:
                 raise ValueError("Brightness must be between 0 and 100")
         else:
             raise ValueError("Cannot set brightness on non-PWM LED")
         
-    def toggle(self, timer=None):
+    def toggle(self, timer=None, fade=False):
         if self.is_pwm:
             if self.pwm.duty_u16() == 0:
+                self.on(fade=fade)
+            else:
+                self.off(fade=fade)
+        else:
+            if self.gpio.value() == 0:
                 self.on()
             else:
                 self.off()
+
+    def toggle_fade(self):
+        if self.is_pwm:
+            if self.pwm.duty_u16() == 0:
+                self.on(fade=True)
+            else:
+                self.off(fade=True)
+        else:
+            if self.gpio.value() == 0:
+                self.on()
+            else:
+                self.off()
+
+    def fade(self, timer=None):
+        if self.is_pwm:
+            if self.pwm.duty_u16() == 0:
+                self.on(fade=True)
+            else:
+                self.off(fade=True)
         else:
             if self.gpio.value() == 0:
                 self.on()
@@ -85,7 +135,7 @@ class LED:
         # Store timer values for later use
         self._timer_period = duration_ms
         self._timer_mode = Timer.PERIODIC
-        self._timer_callback = self.toggle
+        self._timer_callback = self.fade
         # Start timer
         self.start_timer()
 
@@ -114,31 +164,58 @@ class LED:
             self.stop_timer()
         self.off()
 
+def get_all_leds():
+    leds = []
+    for obj in globals().values():
+        if isinstance(obj, LED):
+            leds.append(obj)
+    return leds
+
 def clear():
     """
-    Turn off all LEDs.
+    Turn off all LEDs defined as LED instances in the global scope.
     """
-    # @todo Need to make this dynamic in some fashion.
-    # Storing led's in a list?
-    game_select_one.clear()
-    game_select_two.clear()
-    badge_complete.clear()
-    pico_internal.clear()
-    score_ones.clear()
-    score_twos.clear()
-    score_fours.clear()
-    score_eights.clear()
+    print("Clearing all LEDs...")
+    for led in get_all_leds():
+        led.clear()
+
+print("Initializing LEDs...")
 
 # Standard LED definitions
-game_select_one = LED(8)
-game_select_two = LED(9)
-game_select_three = LED(11)
-badge_complete = LED(10)
-pico_internal = LED(25)
-score_ones = LED(39)
-score_twos = LED(38)
-score_fours = LED(37)
-score_eights = LED(36)
+# Scoreboard
+# Scorebaord and badge are not PWM, due to limitations in PWM channels and pins
+# If they were PWM, they would mirror the other pins on the same pwm channel.
+score_eights = LED(pinout.pin_score_eights)
+score_fours = LED(pinout.pin_score_fours)
+score_twos = LED(pinout.pin_score_twos)
+score_ones = LED(pinout.pin_score_ones)
+
+# Badge LED
+badge_complete = LED(pinout.pin_badge_complete)
+badge_bonus = LED(pinout.pin_badge_bonus)
+
+# Game LED definitions
+kode_complete = LED(pinout.pin_kode_complete, is_pwm=True)
+
+simon_complete = LED(pinout.pin_simon_complete, is_pwm=True)
+simon_bonus = LED(pinout.pin_simon_bonus, is_pwm=True)
+simon_left = LED(pinout.pin_simon_left, is_pwm=True)
+simon_right = LED(pinout.pin_simon_right, is_pwm=True)
+simon_up = LED(pinout.pin_simon_up, is_pwm=True)
+simon_down = LED(pinout.pin_simon_down, is_pwm=True)
+
+hilo_complete = LED(pinout.pin_hilo_complete, is_pwm=True)
+hilo_lo = LED(pinout.pin_hilo_lo, is_pwm=True)
+hilo_hi = LED(pinout.pin_hilo_hi, is_pwm=True)
+
+dtmf_complete = LED(pinout.pin_dtmf_complete, is_pwm=True)
+dtmf_bonus = LED(pinout.pin_dtmf_bonus, is_pwm=True)
+
+rps_complete = LED(pinout.pin_rps_complete, is_pwm=True)
+rps_bonus = LED(pinout.pin_rps_bonus, is_pwm=True)
+rps_rock = LED(pinout.pin_rps_rock, is_pwm=True)
+rps_scissors = LED(pinout.pin_rps_scissors, is_pwm=True)
+rps_paper = LED(pinout.pin_rps_paper, is_pwm=True)
 
 # PWM-controlled LED definitions
 # led2 = LED(1, is_pwm=True)

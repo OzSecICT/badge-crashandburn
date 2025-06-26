@@ -6,6 +6,8 @@ This script manages button configurations and is imported when needed.
 from machine import Pin, Timer
 import time
 
+import pinout
+
 class DebouncedInput: # https://github.com/jmcclin2/updebouncein
     """Micropython Debounced GPIO Input Class"""
     def __init__(self, pin_num, callback, pin_pull=None, pin_logic_pressed=True, debounce_ms=100):
@@ -33,7 +35,7 @@ class DebouncedInput: # https://github.com/jmcclin2/updebouncein
             current_value = False
         
         if ((self.expected_value == True) and (current_value == True)):
-            #print("Button pressed")
+            # print(f"Button pressed: {self.pin_num}")
             self.expected_value = False
             self.last_press_ms = time.ticks_ms()
             if (self.last_release_ms == 0):
@@ -43,7 +45,7 @@ class DebouncedInput: # https://github.com/jmcclin2/updebouncein
             if(self.callback is not None): # Ensure callback is not None - ruff
                 self.callback(self.pin_num, True, ms_since_last_press)
         elif ((self.expected_value == False) and (current_value == False)):
-            #print("Button released")
+            # print(f"Button released: {self.pin_num}")
             self.expected_value = True
             self.last_release_ms = time.ticks_ms()
             ms_duration_of_press = time.ticks_diff(self.last_release_ms, self.last_press_ms) + 2*self.debounce_ms
@@ -73,11 +75,13 @@ def clear():
     down.callback = None
     right.callback = None
 
-start = DebouncedInput(0, None, Pin.PULL_UP, False, 100)
-select = DebouncedInput(1, None, Pin.PULL_UP, False, 100)
-a = DebouncedInput(2, None, Pin.PULL_UP, False, 100)
-b = DebouncedInput(3, None, Pin.PULL_UP, False, 100)
-left = DebouncedInput(4, None, Pin.PULL_UP, False, 100)
-up = DebouncedInput(5, None, Pin.PULL_UP, False, 100)
-down = DebouncedInput(6, None, Pin.PULL_UP, False, 100)
-right = DebouncedInput(7, None, Pin.PULL_UP, False, 100)
+
+print("Initializing buttons...")
+start = DebouncedInput(pinout.pin_button_start, None, Pin.PULL_DOWN, False, 100)
+select = DebouncedInput(pinout.pin_button_select, None, Pin.PULL_DOWN, False, 100)
+a = DebouncedInput(pinout.pin_button_a, None, Pin.PULL_DOWN, False, 100)
+b = DebouncedInput(pinout.pin_button_b, None, Pin.PULL_DOWN, False, 100)
+left = DebouncedInput(pinout.pin_dpad_left, None, Pin.PULL_UP, False, 100)
+up = DebouncedInput(pinout.pin_dpad_up, None, Pin.PULL_UP, False, 100)
+down = DebouncedInput(pinout.pin_dpad_down, None, Pin.PULL_UP, False, 100)
+right = DebouncedInput(pinout.pin_dpad_right, None, Pin.PULL_UP, False, 100)
