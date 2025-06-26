@@ -19,20 +19,20 @@ if pinout_type == "prototype_1":
     # UART and I2C
     pin_uart0_tx = 0
     pin_uart0_rx = 1
-    pin_i2c0_sda = None
-    pin_i2c0_scl = None
+    pin_i2c0_sda = 25
+    pin_i2c0_scl = 25
 
     # SAO
-    pin_sao_gpio2 = None
-    pin_sao_gpio1 = None
+    pin_sao_gpio2 = 25
+    pin_sao_gpio1 = 25
 
     # Controller inputs
     pin_button_a = 2
     pin_button_b = 3
     pin_button_select = 4
     pin_button_start = 5
-    pin_dpad_right = 6
-    pin_dpad_down = 7
+    pin_dpad_right = 7
+    pin_dpad_down = 6
     pin_dpad_up = 8
     pin_dpad_left = 9
 
@@ -47,22 +47,22 @@ if pinout_type == "prototype_1":
     pin_badge_bonus = 14
 
     # Game LEDs
-    pin_kode_complete = 25
+    pin_kode_complete = 15
 
-    pin_simon_complete = None
-    pin_simon_bonus = None
-    pin_simon_left = None
-    pin_simon_right = None
-    pin_simon_up = None
-    pin_simon_down = None
+    pin_simon_complete = 25
+    pin_simon_bonus = 25
+    pin_simon_left = 25
+    pin_simon_right = 25
+    pin_simon_up = 25
+    pin_simon_down = 25
 
-    pin_hilo_complete = 22
-    pin_hilo_lo = 26
-    pin_hilo_hi = 27
+    pin_hilo_complete = 26
+    pin_hilo_lo = 27
+    pin_hilo_hi = 28
 
-    pin_dtmf_bonus = None
-    pin_dtmf_complete = None
-    pin_dtmf_mic = None # 26 ADC0
+    pin_dtmf_bonus = 25
+    pin_dtmf_complete = 25
+    pin_dtmf_mic = 25 # 26 ADC0
 
     pin_rps_tx = 16
     pin_rps_rx = 17
@@ -76,20 +76,20 @@ if pinout_type == "prototype_2":
     # UART and I2C
     pin_uart0_tx = 0
     pin_uart0_rx = 1
-    pin_i2c0_sda = None
-    pin_i2c0_scl = None
+    pin_i2c0_sda = 25
+    pin_i2c0_scl = 25
 
     # SAO
-    pin_sao_gpio2 = None
-    pin_sao_gpio1 = None
+    pin_sao_gpio2 = 25
+    pin_sao_gpio1 = 25
 
     # Controller inputs
     pin_button_a = 2
     pin_button_b = 3
     pin_button_select = 4
     pin_button_start = 5
-    pin_dpad_right = 6
-    pin_dpad_down = 7
+    pin_dpad_right = 7
+    pin_dpad_down = 6
     pin_dpad_up = 8
     pin_dpad_left = 9
 
@@ -113,21 +113,21 @@ if pinout_type == "prototype_2":
     pin_simon_up = 20
     pin_simon_down = 21
 
-    pin_hilo_complete = None
-    pin_hilo_lo = None
-    pin_hilo_hi = None
+    pin_hilo_complete = 25
+    pin_hilo_lo = 25
+    pin_hilo_hi = 25
 
     pin_dtmf_bonus = 22
     pin_dtmf_complete = 27
     pin_dtmf_mic = 26 # 26 ADC0
 
-    pin_rps_tx = None
-    pin_rps_rx = None
-    pin_rps_rock = None
-    pin_rps_scissors = None
-    pin_rps_paper = None
-    pin_rps_complete = None
-    pin_rps_bonus = None
+    pin_rps_tx = 25
+    pin_rps_rx = 25
+    pin_rps_rock = 25
+    pin_rps_scissors = 25
+    pin_rps_paper = 25
+    pin_rps_complete = 25
+    pin_rps_bonus = 25
 
 if pinout_type == "production":
     # UART and I2C

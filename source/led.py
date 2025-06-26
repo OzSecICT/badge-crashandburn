@@ -10,11 +10,11 @@ import time
 import pinout
 
 class LED:
-    def __init__(self, pin, is_pwm=False):
+    def __init__(self, pin, is_pwm=False, brightness=10):
         self.pin = pin
         self.is_pwm = is_pwm
         self.timer = None
-        self.brightness = 65535
+        self.brightness = int(brightness * 655.35)  # Convert 0-100 to 0-65535 for PWM
         self._timer_period = None
         self._timer_mode = None
         self._timer_callback = None
@@ -25,15 +25,37 @@ class LED:
         else:
             self.gpio = Pin(pin, Pin.OUT)
 
-    def on(self):
+    def on(self, fade=False):
+        if self.timer is not None:
+            self.stop_timer()
         if self.is_pwm:
-            self.pwm.duty_u16(self.brightness)
+            if fade:
+                # Ramp up brightness
+                # Set duty to 0, then gradually increase to self.brightness
+                self.pwm.duty_u16(0)
+                step = self.brightness // 10  # Adjust step size as needed
+                for duty in range(0, self.brightness + 1, step):
+                    self.pwm.duty_u16(duty)
+                    time.sleep_ms(50)
+            else:
+                self.pwm.duty_u16(self.brightness)
         else:
             self.gpio.value(1)
 
-    def off(self):
+    def off(self, fade=False):
+        if self.timer is not None:
+            self.stop_timer()
         if self.is_pwm:
-            self.pwm.duty_u16(0)
+            if fade:
+                # Ramp down brightness
+                # Set duty to self.brightness, then gradually decrease to 0
+                self.pwm.duty_u16(self.brightness)
+                step = self.brightness // 10  # Adjust step size as needed
+                for duty in range(self.brightness, -1, -step):
+                    self.pwm.duty_u16(duty)
+                    time.sleep_ms(50)
+            else:
+                self.pwm.duty_u16(0)
         else:
             self.gpio.value(0)
 
@@ -69,12 +91,36 @@ class LED:
         else:
             raise ValueError("Cannot set brightness on non-PWM LED")
         
-    def toggle(self, timer=None):
+    def toggle(self, timer=None, fade=False):
         if self.is_pwm:
             if self.pwm.duty_u16() == 0:
+                self.on(fade=fade)
+            else:
+                self.off(fade=fade)
+        else:
+            if self.gpio.value() == 0:
                 self.on()
             else:
                 self.off()
+
+    def toggle_fade(self):
+        if self.is_pwm:
+            if self.pwm.duty_u16() == 0:
+                self.on(fade=True)
+            else:
+                self.off(fade=True)
+        else:
+            if self.gpio.value() == 0:
+                self.on()
+            else:
+                self.off()
+
+    def fade(self, timer=None):
+        if self.is_pwm:
+            if self.pwm.duty_u16() == 0:
+                self.on(fade=True)
+            else:
+                self.off(fade=True)
         else:
             if self.gpio.value() == 0:
                 self.on()
@@ -89,7 +135,7 @@ class LED:
         # Store timer values for later use
         self._timer_period = duration_ms
         self._timer_mode = Timer.PERIODIC
-        self._timer_callback = self.toggle
+        self._timer_callback = self.fade
         # Start timer
         self.start_timer()
 
@@ -118,14 +164,20 @@ class LED:
             self.stop_timer()
         self.off()
 
+def get_all_leds():
+    leds = []
+    for obj in globals().values():
+        if isinstance(obj, LED):
+            leds.append(obj)
+    return leds
+
 def clear():
     """
     Turn off all LEDs defined as LED instances in the global scope.
     """
     print("Clearing all LEDs...")
-    for obj in globals().values():
-        if isinstance(obj, LED):
-            obj.clear()
+    for led in get_all_leds():
+        led.clear()
 
 print("Initializing LEDs...")
 
