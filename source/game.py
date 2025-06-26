@@ -45,7 +45,6 @@ class Game:
 
     @property
     def is_running(self):
-        print(f"Game state is: {self.__running}")
         return self.__running
     
     def run(self):

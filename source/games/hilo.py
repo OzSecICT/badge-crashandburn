@@ -22,20 +22,21 @@ class HiLoGame(Game):
         self.score = 0
         self.choice = None
         self.guess = None
-        self.options = ["hi", "lo"]
+        self.options = ["HI", "LO"]
 
     def register_callbacks(self):
         button.up.callback = self.clicked_a  # type: ignore
         button.down.callback = self.clicked_b  # type: ignore
         button.a.callback = self.clicked_a  # type: ignore
         button.b.callback = self.clicked_b  # type: ignore
+        button.select.callback = self.clicked_select  # type: ignore
 
     def clicked_a(self, pin, pressed, duration):
         """
         Handle the A button being pressed in HiLoGame
         """
         if pressed:
-            self.guess = "hi"
+            self.guess = "HI"
             print(f"User guessed: {self.guess}")
             self.check(self.guess)
 
@@ -44,7 +45,7 @@ class HiLoGame(Game):
         Handle the B button being pressed in HiLoGame
         """
         if pressed:
-            self.guess = "lo"
+            self.guess = "LO"
             print(f"User guessed: {self.guess}")
             self.check(self.guess)
 
