@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "OzSecCustom")(type "KiCad")(uri "${KIPRJMOD}/ozsec-custom.pretty")(options "")(descr ""))
+  (lib (name "OzSec2025")(type "KiCad")(uri "${KIPRJMOD}/OzSec2025-ESP32.pretty")(options "")(descr ""))
+)
