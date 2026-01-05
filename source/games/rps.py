@@ -12,6 +12,9 @@ import button
 import led
 import pinout
 from game import Game
+import scoreboard
+import state
+
 
 class RPSGame(Game):
     def __init__(self):
@@ -23,14 +26,11 @@ class RPSGame(Game):
         self.peer_selected = False
         self.score = 0
         self.options = ["ROCK", "PAPER", "SCISSORS"]
-        self.uart = UART(0, baudrate=9600, \
-                        tx=pinout.pin_rps_tx, \
-                        rx=pinout.pin_rps_rx)
 
     def register_callbacks(self):
         button.left.callback = self.clicked_left  # type: ignore
         button.right.callback = self.clicked_right  # type: ignore
-        button.up.callback = self.clicked_up # type: ignore
+        button.up.callback = self.clicked_up  # type: ignore
         button.a.callback = self.cancel_choice  # type: ignore
         button.b.callback = self.select_choice  # type: ignore
         button.select.callback = self.clicked_select  # type: ignore
@@ -74,7 +74,7 @@ class RPSGame(Game):
             led.rps_paper.clear()
             led.rps_scissors.clear()
             self.player_choice = "ROCK"
-    
+
     def clicked_left(self, pin, pressed, duration):
         """
         Handle the left button being pressed.
@@ -108,7 +108,7 @@ class RPSGame(Game):
                 print("Player cancelled their choice.")
             else:
                 print("No choice to cancel.")
-            
+
             led.rps_rock.clear()
             led.rps_paper.clear()
             led.rps_scissors.clear()
@@ -127,36 +127,15 @@ class RPSGame(Game):
         """
         Game loop for Rock Paper Scissors.
         """
-        super().run() # Call the parent run method to clear buttons/leds.
+        super().run()  # Call the parent run method to clear buttons/leds.
         print("Starting Rock Paper Scissors Game")
-        led.rps_complete.flash(0.5)
+        led.rps_complete.flash()
 
         self.play_bot()
 
-        # Test if multiplayer is available
-        # self.check_link()
+        print(
+            "Use DPAD to choose Scissors [<], Rock [^], or Paper [>].\nPress A to lock in selection.")
 
-        print("Use DPAD to choose Scissors [<], Rock [^], or Paper [>].\nPress A to lock in selection.")
-
-
-        # Multiplayer mode
-        # Wait for the player to select an option
-        # Send the player's choice to the peer
-        # Wait for the peer to select an option
-        # Receive the peer's choice
-
-    def check_link(self):
-        """
-        Check if the UART link is available for multiplayer.
-        """
-        try:
-            # Attempt to read from the UART
-            if self.uart.any():
-                return True
-        except Exception as e:
-            print(f"UART error: {e}")
-        return False
-    
     def determine_winner(self, player_choice, peer_choice):
         """
         Determine the winner based on player and peer choices.
@@ -167,29 +146,11 @@ class RPSGame(Game):
              (player_choice == "PAPER" and peer_choice == "ROCK") or \
              (player_choice == "SCISSORS" and peer_choice == "PAPER"):
             self.score += 1
+            scoreboard.scoreboard.add_score("RPSGame")
             print(f"Player wins! Score is now {self.score}")
+            state.gamestate.complete("RPSGame")
         else:
             print(f"Peer wins! Your score remains {self.score}")
 
         self.peer_selected = False
         self.player_selected = False
-
-    def send_choice(self, choice):
-        """
-        Send the player's choice to the peer over UART.
-        """
-        if self.uart:
-            self.uart.write(choice.encode('utf-8'))
-            print(f"Sent choice: {choice}")
-        else:
-            print("UART not available, cannot send choice.")
-
-    def receive_choice(self):
-        """
-        Receive the peer's choice from UART.
-        """
-        if self.uart.any():
-            choice = self.uart.read(1).decode('utf-8')
-            print(f"Received choice: {choice}")
-            return choice
-        return None
