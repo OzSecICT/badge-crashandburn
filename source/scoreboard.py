@@ -3,17 +3,19 @@ from machine import Pin
 
 import led
 
+
 class Scoreboard:
     def __init__(self):
         self.scores = {}
         self.current_game = None
 
         self.ones_led = led.score_ones
-        self.twos_led =  led.score_twos
+        self.twos_led = led.score_twos
         self.fours_led = led.score_fours
         self.eights_led = led.score_eights
-        self.score_leds = [self.ones_led, self.twos_led, self.fours_led, self.eights_led]
-        
+        self.score_leds = [self.ones_led, self.twos_led,
+                           self.fours_led, self.eights_led]
+
     def show_score(self, game):
         self.current_game = game
         print(f"Showing score for game: {self.current_game}")
@@ -64,3 +66,6 @@ class Scoreboard:
             print(f"Score for {game} is now {self.scores.get(game, 0)}")
         else:
             print(f"No score found for game: {game}")
+
+
+scoreboard = Scoreboard()

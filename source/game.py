@@ -1,10 +1,12 @@
 import button
 import led
 
+
 class Game:
     """
     Base game class
     """
+
     def __init__(self):
         print("Initializing base Game class")
         self.__running = False
@@ -46,7 +48,7 @@ class Game:
     @property
     def is_running(self):
         return self.__running
-    
+
     def run(self):
         """
         Set up the board for the game
